@@ -2,24 +2,50 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 	<title></title>
 </head>
-<body>
-	<div class="container">
-		<h1> Recent Posts</h1>
+<body ng-app="app">
+	<div class="container" ng-controller="PostsCtrl">
+		<h1>Recent Posts</h1>
+		<input ng-model="postBody" class="form-control" /> </br>
+		<button ng-click="addPost()" class="btn btn-default">Add Post</button></br></br>
 		<ul class="list-group">
-			<li class="list-item-group">
-				<strong>@dicksonxxx</strong>
-				<span>Node Faxs!</span>
-			</li>
-		</ul>
-		<ul class="list-group">
-			<li class="list-item-group">
-				<strong>@archonxxx</strong>
-				<span>Oh Yeah!</span>
+			<li ng-repeat="post in posts" class="list-item-group">
+				<strong>@{{post.username}}</strong>
+				<span>{{post.body}}</span>
 			</li>
 		</ul>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script> 
+		var app = angular.module('app', [])
+		app.controller('PostsCtrl', function($scope) {
+
+			$scope.addPost = function() {
+				
+				if ($scope.postBody) {
+					$scope.posts.unshift({
+						username: "grayson",
+						body: $scope.postBody
+					})
+					$scope.postBody = null;
+				}
+			}
+
+			$scope.posts = [
+				{
+					username: "dickson",
+					body: "Node Faxs!"	
+
+				},
+				{
+					username: "archonxxx",
+					body: "Oh Yeah!"	
+
+				}
+			]
+		})
+
+	</script>
 </body>
 </html>
