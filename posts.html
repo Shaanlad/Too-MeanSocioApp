@@ -19,10 +19,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 	<script> 
 		var app = angular.module('app', [])
-		app.controller('PostsCtrl', function($scope) {
-
+		app.controller('PostsCtrl', function($scope, $http) {
+			
 			$scope.addPost = function() {
-				
 				if ($scope.postBody) {
 					$scope.posts.unshift({
 						username: "grayson",
@@ -32,18 +31,23 @@
 				}
 			}
 
-			$scope.posts = [
-				{
-					username: "dickson",
-					body: "Node Faxs!"	
+			$http.get('http://localhost:3000/api/posts')
+			.success(function (posts) { 
+				$scope.posts = posts	
 
-				},
-				{
-					username: "archonxxx",
-					body: "Oh Yeah!"	
+			})
+			// $scope.posts = [
+			// 	{
+			// 		username: "dickson",
+			// 		body: "Node Faxs!"	
 
-				}
-			]
+			// 	},
+			// 	{
+			// 		username: "archonxxx",
+			// 		body: "Oh Yeah!"	
+
+			// 	}
+			// ]
 		})
 
 	</script>
