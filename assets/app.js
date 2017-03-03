@@ -40,10 +40,6 @@ angular.module('app',[
 	}
 })
 
-
-
-
-
 .service('PostsSvc', function ($http) {
 	this.fetch = function () {
 		return $http.get('/api/posts')
@@ -52,3 +48,22 @@ angular.module('app',[
 		return	$http.post('/api/posts', post)	
 	}
 })
+
+.service('UserSvc', function ($http) {
+	var svc = this
+	svc.getUser = function (){
+		return $http.get('api/users/', { 
+			headers: {'X-auth':this.token}
+		})
+	}
+	svc.login = function (username, password) {
+		return $http.post('api/sessions', {
+			username: username, password: password
+		}).then(function (val) {
+			svc.token = val.data
+			return svc.getUser()
+			console.log(svc.getUser())	
+		})
+	}
+})
+

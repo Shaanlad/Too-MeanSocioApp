@@ -2,6 +2,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var Post = require('./models/post')
 var app = express()
+var sessions = require('./controllers/api/sessions')
+var users = require('./controllers/api/users')
 
 // require('./controllers/api/posts')(app)
 
@@ -13,8 +15,11 @@ app.use(bodyParser.urlencoded({
 
 app.use(require('./controllers/api/posts'))
 app.use(require('./controllers/static'))
+app.use('/api/sessions', sessions)
+app.use('/api/users', users)
 
-app.listen(3000, function(){
+
+app.listen(3000, function (){
 	console.log('Server listening on port', 3000)
 })
 
