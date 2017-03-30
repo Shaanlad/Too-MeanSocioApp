@@ -13,16 +13,16 @@ app.use(bodyParser.urlencoded({
 	})
 ); // support encoded bodies
 
-app.use(require('./auth'))
+app.use('/api/users', users)
+//app.use(require('./auth'))
 app.use(require('./controllers/api/posts'))
 app.use(require('./controllers/static'))
 app.use('/api/sessions', sessions)
-app.use('/api/users', users)
 
-
-app.listen(3000, function (){
+var server = app.listen(3000, function (){
 	console.log('Server listening on port', 3000)
 })
+require('./websockets').connect(server)
 
 // app.get('/api/posts', function (req, res) {
 // 	Post.find(function (err, post) {

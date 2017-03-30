@@ -5,6 +5,7 @@ var jwt = require('jwt-simple')
 var config = require('../../config')
 
 router.get('/', function (req, res, next) {
+	console.log("in this")
 	if (!req.headers['x-auth']) {
 		return res.send(401)
 	} 

@@ -21,6 +21,7 @@ router.get('/api/posts', function (req, res, next) {
 	})
 })
 router.post('/api/posts', function (req, res, next) {
+	console.log("in hhere  posts")
 	var post = new Post({
 		username: req.body.username,
 		body: req.body.body

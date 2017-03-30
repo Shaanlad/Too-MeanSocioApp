@@ -30,19 +30,24 @@ angular.module('app',[
 	console.log("In this")
 })
 
-.controller('LoginCtrl', function ($scope, UserSvc) {
-	$scope.login = function(username, password) {
+.controller('LoginCtrl', function ($scope, UserSvc, $rootScope) {
+	$scope.login = function (username, password) {
 		UserSvc.login(username, password)
 		.then(function (response) {
-			//console.log(user)
+			// console.log('Inside LoginCtrl')	
+			// console.log(username, password)
+			console.log("sending",response.data)
 			$scope.$emit('login', response.data)
 		})
 	}
 })
 
-.controller('ApplicationCtrl', function ($scope) {
-	$scope.$on('login', function (_, user) {
-		$scope.currrentUser = user
+.controller('ApplicationCtrl', function ($scope, $rootScope, $location) {
+	$rootScope.$on('login', function (_, user) {
+		console.log("got it")
+		$rootScope.currentUser = user
+		console.log($rootScope.currentUser)
+		$location.path('/')
 	})
 })
 
@@ -58,7 +63,7 @@ angular.module('app',[
 .service('UserSvc', function ($http) {
 	var svc = this
 	svc.getUser = function (){
-		return $http.get('api/users/')
+		return $http.get('api/users')
 	}
 	svc.login = function (username, password) {
 		return $http.post('api/sessions', {
@@ -67,7 +72,6 @@ angular.module('app',[
 			svc.token = val.data
 			$http.defaults.headers.common['X-Auth'] = val.data
 			return svc.getUser()
-			console.log(svc.getUser())	
 		})
 	}
 })
